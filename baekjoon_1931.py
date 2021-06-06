@@ -21,17 +21,26 @@ table = []
 for i in l:
   table.append(li[i])
 
-
-# 수정 바람
+can = True # 회의시간이 겹치지 않으면 True 겹치면 False
+count = 0
 for i in table:
-  k = i[1]
-
-  if k not in clock:
-    continue
-  else:
-    for _ in range(i[1]-i[0] - 1):
-      k += 1
-      clock.remove(k)
+  k = int(i[1])
+  c = int(i[0])
+  while c != k + 1:
+    if c in clock:
+      c += 1
+    else:
+      can = False
+      break
   
+  if can:
+    a = int(i[0])
+    for _ in range(int(i[1])-int(i[0])-1):
+      a += 1
+      clock.remove(a)
+    count += 1
+  else:
+    can = True
+    continue
 
-
+print(count)
