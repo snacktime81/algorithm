@@ -6,6 +6,7 @@ li = []
 clock = []
 l = []
 
+# 시간초과, 정렬파트 간소화 필요함
 for i in range(N):
   time = list(sys.stdin.readline().split())
   using_time = int(time[1]) - int(time[0])
