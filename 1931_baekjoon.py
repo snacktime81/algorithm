@@ -4,7 +4,6 @@ N = int(sys.stdin.readline())
 meeting = {}
 li = []
 clock = []
-l = []
 
 # 시간초과, 정렬파트 간소화 필요함
 for i in range(N):
@@ -14,13 +13,10 @@ for i in range(N):
   li.append(time)
 
 meeting_sort = sorted(meeting.items(), key = lambda x: x[1])
-for i in range(len(meeting_sort)):
-  l.append(meeting_sort[i][0])
-
 table = []
+for i in range(len(meeting_sort)):
+    table.append(li[meeting_sort[i][0]])
 
-for i in l:
-  table.append(li[i])
 
 can = True # 회의시간이 겹치지 않으면 True 겹치면 False
 count = 0
