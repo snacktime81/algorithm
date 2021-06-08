@@ -9,18 +9,13 @@ clock = []
 for i in range(N):
   time = list(sys.stdin.readline().split())
   using_time = int(time[1]) - int(time[0])
-  meeting[i] = using_time
-  li.append(time)
+  meeting[int(time[0])] = using_time  # 회의 시작 시간이 같으면 딕셔너리 특성상 앞에 회의시간이 사라진다.
 
 meeting_sort = sorted(meeting.items(), key = lambda x: x[1])
-table = []
-for i in range(len(meeting_sort)):
-    table.append(li[meeting_sort[i][0]])
-
 
 can = True # 회의시간이 겹치지 않으면 True 겹치면 False
 count = 0
-for i in table:
+for i, j in meeting_sort:
   k = int(i[1])
   c = int(i[0])
   while c != k + 1:
@@ -31,8 +26,8 @@ for i in table:
       break
   
   if can:
-    a = int(i[0])
-    for _ in range(int(i[1])-int(i[0])-1):
+    a = i
+    for _ in range(j-1):
       a += 1
       clock.append(a)
     count += 1
