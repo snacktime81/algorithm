@@ -5,11 +5,11 @@ meeting = {}
 li = []
 clock = []
 
-# 시간초과, 정렬파트 간소화 필요함
+# 시간초과
 for i in range(N):
-  time = list(sys.stdin.readline().split())
+  time = tuple(sys.stdin.readline().split()) # list는 dict의 key가 될 수 없다, 반면에 tuple은 dict의 key가 될 수 있다.
   using_time = int(time[1]) - int(time[0])
-  meeting[int(time[0])] = using_time  # 회의 시작 시간이 같으면 딕셔너리 특성상 앞에 회의시간이 사라진다.
+  meeting[time] = using_time 
 
 meeting_sort = sorted(meeting.items(), key = lambda x: x[1])
 
@@ -26,7 +26,7 @@ for i, j in meeting_sort:
       break
   
   if can:
-    a = i
+    a = int(i[0])
     for _ in range(j-1):
       a += 1
       clock.append(a)
