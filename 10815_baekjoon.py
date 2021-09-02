@@ -8,7 +8,7 @@ s.sort()
 result = []
 
 for i in nums:
-  top = n
+  top = n-1
   bottom = 0
   while bottom <= top:
     mid = (top+bottom)//2
@@ -19,13 +19,12 @@ for i in nums:
         result.append(1)
       break
     if i < s[mid]:
-      top = mid - 1
+      top = mid
     elif i > s[mid]:
       bottom = mid + 1
     elif i == s[mid]:
       result.append(1)
       break
-
 
 for i in result:
   print(i, end=" ")
