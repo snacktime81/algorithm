@@ -5,17 +5,23 @@ n, m =map(int, sys.stdin.readline().split())
 trees = list(map(int, sys.stdin.readline().split()))
 k = max(trees)
 
-while True:
+bottom = 0
+top = k
+while bottom <= top:
+  mid = (bottom+top) // 2
   wood = 0
-  for tree in trees:
-    left_wood = tree - k
-    if left_wood > 0:
-      wood += left_wood
+  for i in trees:
+    left = i - mid
+    if left > 0:
+      wood += left
     else:
       continue
-  if wood >= m:
-    break
+  if wood < m:
+    bottom = mid + 1
+  elif wood > m:
+    bottom = mid - 1
   else:
-    k -= 1
+    print(top)
+    break
+
   
-print(k)
