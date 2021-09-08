@@ -7,32 +7,23 @@ for i in range(n):
   li.append(int(sys.stdin.readline()))
 
 li.sort()
-lst = tuple(li)
-l = {}
-l2 = []
-for i in lst:
-  k = li.count(i)
-  l2.append(k)
-  l[i] = k
-l3 = sorted(l.items(), key=lambda x: x[1])
+li_third = []
+for i in li:
+  cnt = li.count(i)
+  li_third.append([cnt, i])
+
+li_third_sort = sorted(li_third, reverse=True)
+if len(li) >= 2:
+  if li_third_sort[0][0] == li_third_sort[1][0]:
+    third = li_third_sort[1][1]
+  else:
+    third = li_third_sort[0][1]
+else:
+  third = li_third_sort[0][1]
 
 
 first = round(sum(li)/len(li))
 second = li[round(len(li)/2)]
-
-
-a = max(l2)
-l2.remove(a)
-if len(li) > 2:
-  b = max(l2)
-
-  if l3[a][1] == l3[b][1]:
-    third = l[b]
-  else:
-    third = l[a]
-else:
-  third = l[a]
-
 four = max(li) - min(li)
 
 print(first)
