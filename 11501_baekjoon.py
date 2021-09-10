@@ -2,25 +2,16 @@
 import sys
 n = int(sys.stdin.readline())
 profits= []
-for i in range(n):
+for _ in range(n):
   m = int(sys.stdin.readline())
   stocks = list(map(int, sys.stdin.readline().split()))
-  max_price = max(stocks)
+  max_price = stocks[-1]
   profit = 0
-  cnt = 0 
-  for i, price in enumerate(stocks):
-    if price < max_price:
-      profit -= price
-      cnt += 1
-    elif price == max_price:
-      profit += max_price * cnt
-      cnt = 0    
-      try:
-        stocks_right = stocks[i+1:]
-        max_price = max(stocks_right)
-      except:
-        break
+  for i in range(m-1, -1, -1):
+    if stocks[i] < max_price:
+      profit += max_price - stocks[i]
+    else:
+      max_price = stocks[i]
   profits.append(profit)
-
 for i in profits:
   print(i)
