@@ -19,10 +19,4 @@ else:
     n = k
     key = m
 
-if key == 1:
-  print(const_n * const_m)
-else:
-  if const_m > const_n:
-    print(const_m)
-  else:
-    print(const_n)
+print(const_n * const_m // key)
