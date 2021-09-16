@@ -11,15 +11,10 @@ def gcd(big, small):
 
 for i in range(n):
   nums = list(map(int, sys.stdin.readline().split()))
-  nums.pop(0)
+  k = nums.pop(0)
   gcd_sum = 0
-  for i in range(len(nums) - 1):
-    num_index = nums.index(nums[i])
-    for j in range(num_index+1, len(nums)):
-      if nums[i] > nums[j]:
+  for i in range(k):
+    for j in range(k):
+      if i > j:
         gcd_sum += gcd(nums[i], nums[j])
-      elif nums[i] < nums[j]:
-        gcd_sum += gcd(nums[j], nums[i])
-      else:
-        gcd_sum += nums[i]
   print(gcd_sum)
