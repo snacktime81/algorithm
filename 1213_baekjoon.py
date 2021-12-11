@@ -4,8 +4,9 @@ s = input()
 s = list(s)
 i = 0
 r = len(s) - 1
-b = True
 s = sorted(s)
+b =True
+cnt = 0
 while i < r:
     if(s[i] == s[r]):
         i += 1
@@ -17,13 +18,19 @@ while i < r:
                 for k in range(j, r):
                     s[k] = s[k+1]
                 s[r] = s[i]
-                print(s)
+                i += 1
+                r -= 1
                 break
         else:
-            b = False
-
-        i += 1
-        r -= 1
+            if(cnt > len(s)):
+                b= False
+                break
+            else:
+                tmp = s[i]
+                for k in range((i), r):
+                    s[k] = s[k+1]
+                s[r] = tmp
+                cnt += 1
 
 if(b):
     print("".join(s))
