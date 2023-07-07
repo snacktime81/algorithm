@@ -1,23 +1,43 @@
 # 2606
 import sys
+from collections import deque
 
 c = int(sys.stdin.readline())
 n = int(sys.stdin.readline())
-nod = []
-dic = {}
 
-for i in range(c):
-    dic[i+1] = set()
-for j in range(n):
-  a, b = map(int, sys.stdin.readline().split())
-  dic[a].add(b) #dic[a]가 set이라 .add가 가능
-  dic[b].add(a)
+graph = [[] for _ in range(c+1)]
+visited = [False] * (c+1)
 
-def dfs(start, dic):
-    for i in dic[start]:
-        if i not in visited:
-            visited.append(i)
-            dfs(i, dic)
-visited = []
-dfs(1, dic)
-print(len(visited)-1)
+for _ in range(n):
+    computer, link = map(int, sys.stdin.readline().split())
+    #print(link)
+    graph[computer].append(link)
+    graph[link].append(computer)
+    
+def bfs(graph, node, visited):
+    if visited[node]:
+        return False
+    
+    visited[node] = True
+    queue = deque([node])
+    
+    while queue:
+        
+        computer = queue.popleft()
+        for i in graph[computer]:
+            
+            if not visited[i]:
+                queue.append(i)
+                visited[i] = True
+                
+    return visited
+virus = bfs(graph, 1, visited)
+
+answer = 0
+
+for i in virus:
+    if(i):
+        answer += 1
+        
+print(answer-1)
+        
