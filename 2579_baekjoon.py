@@ -1,33 +1,26 @@
 #2579
 import sys
+input = sys.stdin.readline
 
-stairs = int(sys.stdin.readline())
-score = [0 for _ in  range(stairs+1)]
-sum_score = 0
+n = int(input())
 
-for i in range(stairs - 1, -1, -1):
-  score[i] = int(sys.stdin.readline())
-score[stairs] = 0
+arrS = [0] * (n+1)
+arr = [0] * (n+1)
 
-B = True
+for i in range(1, n+1):
+    arr[i] = int(input())
+    
 
-tmp = 1
-sum_score += score[0]
-cnt = 1
+arrS[1] = arr[1]
 
-while(cnt < stairs):
-  if tmp == 2:
-    cnt += 2
-    sum_score += score[cnt]
-    tmp = 1
-  else:
-    if score[cnt] > score[cnt+1]:
-      sum_score += score[cnt]
-      tmp += 1
-      cnt += 1
-    else:
-      sum_score += score[cnt+1]
-      tmp = 1
-      cnt += 2
+if(n >= 2):
+    arrS[2] = arr[2] + arr[1]
+if(n >= 3):
+    for i in range(3, n+1):
+        arrS[i] = max( (arrS[i-2] + arr[i]), (arrS[i-3] + arr[i-1] + arr[i]) )
 
-print(sum_score)
+
+print(arrS[n])
+
+
+    
