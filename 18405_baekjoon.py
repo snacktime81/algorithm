@@ -10,35 +10,39 @@ graph = []
 
 for _ in range(n):
     graph.append(list(map(int, input().split())))
+
+ts, tx, ty = map(int, input().split())
     
-s, tx, ty = map(int, input().split())
 move = [(0,1), (0, -1), (-1, 0), ( 1, 0)]
 
-x, y =(0,0)
+data = []
 
-q = deque([x, y])
+for i in range(n):
+    for j in range(n):
+        if(graph[i][j] != 0):
+            data.append([graph[i][j], i, j, 0])
+            
+data.sort(key=lambda x:x[0])
 
-def bfs(graph, start):
-    for i in range(1, k+1):
-        for x in range(n):
-            for y in range(n):
-                if(graph[x][y] == i):
-                    for j in move:
-                        dx = x + j[0]
-                        dy = y + j[1]
-                        if((dx < 0 or dy < 0 or dx >=n  or dy >= n) or graph[dx][dy] < 0):
-                            continue
-                        graph[dx][dy] = i*(-1)
-                        
-def change(graph, k):
-    for x in range(n):
-        for y in range(n):
-            if(graph[x][y] < 0):
-                graph[x][y] *= -1
+
+q = deque()
+
+for i in data:
+    q.append(i)
+            
+while q:
+    virus, x, y, s = q.popleft()
     
-
-for _ in range(s):
-    bfs(graph, (0,0))
-    change(graph, k)
+    if(s == ts):
+        break
+    
+    for i in move:
+        dx = x + i[0]
+        dy = y + i[1]
+        if(dx < 0 or dy < 0 or dx >= n or dy >= n or graph[dx][dy] != 0):
+            continue
+        if(graph[dx][dy] == 0):
+            graph[dx][dy] = virus
+            q.append([virus, dx, dy, s+1])
 
 print(graph[tx-1][ty-1])
