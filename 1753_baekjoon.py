@@ -1,4 +1,7 @@
 import heapq
+import sys
+
+input = sys.stdin.readline
 
 n, m = map(int, input().split())
 
@@ -14,7 +17,7 @@ graph = [ [] for _ in range(n+1) ]
 
 for _ in range(m):
     toNode, fromNode, wei = map(int, input().split())
-    graph[toNode].append((wei, fromNode))
+    graph[toNode].append((fromNode, wei))
     
 
 def dij(start):
@@ -31,11 +34,11 @@ def dij(start):
             continue
         
         for i in graph[now]:
-            cost = dist + i[0]
+            cost = dist + i[1]
             
-            if( cost < weight[i[1]]):
-                weight[i[1]] = cost
-                heapq.heappush(q, (cost, i[1]))
+            if( cost < weight[i[0]]):
+                weight[i[0]] = cost
+                heapq.heappush(q, (cost, i[0]))
     
 dij(start)
 cnt = True
