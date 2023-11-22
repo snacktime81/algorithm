@@ -26,14 +26,14 @@ for _ in range(T):
     usersRe.append([dx,dy])
     users.pop()
     l -= 1
-    minY = dy
+    minY = dy # 역순 정렬때문에 마지막으로 입력받은 면접시험성적(y)이 최소 값이다 
     
     while users: # while
         dx, dy = users[l]
         
 
         for x, y in usersRe:
-            if(dy > y):
+            if(dy > y): # 역순으로 정렬했기 때문에 무조건 dx > x 이다
                 break
             elif(dy < minY):
                 minY = dy
@@ -45,4 +45,3 @@ for _ in range(T):
     
     #print('re: ', usersRe)
     print(len(usersRe))
-      
