@@ -1,61 +1,58 @@
 import sys
-from copy import deepcopy
+from collections import deque
 input = sys.stdin.readline
-sys.setrecursionlimit(10**6)
+
 INF = int(1e9)
 
 
-def dfs(graph, x, y, mirror, direction):
+def bfs(graph, x, y, direction):
+    q = deque([(x, y, 0, direction)])
     
-    if(visited[x][y][direction] < mirror):
-        return 0
-    block = graph[x][y]
+    while q:
+        x, y, new, direction = q.popleft()
+        block = graph[x][y]
+        #print('x, y: ', x, y, visited[2][1][3], )
+        if(visited[x][y][direction] > new):
+            visited[x][y][direction] = new
+        else:
+            continue
+        #print('x, y,   cost, new: ', x, y, visited[x][y][direction], new)
+        if(block == '!'):
+            for i in move:
+                if(i[2]  == illegalMove[direction]):
+                    continue
 
-    cost = visited[x][y][direction]
-    visited[x][y][direction] = min(cost, mirror)
-    
-    if(block == '!'):
-        for i in move:
-            if(i[2]  == illegalMove[direction]):
-                continue
-            
-            dx = x + i[0]
-            dy = y + i[1]
-            
+                dx = x + i[0]
+                dy = y + i[1]
+                
+                if(dx < 0 or dy < 0 or dx >= n or dy >= n):
+                    continue
+                if(graph[dx][dy] == '*'):
+                    continue
+                
+                if(i[2] == direction): #거울설치 안함
+                    q.append([dx, dy, new, direction])
+                else: #거울 설치
+                    q.append([dx, dy, new+1, i[2]])
+                    
+                
+        else: # . 일때
+            #graph[x][y] = '*'
+            dx = x + move[direction][0]
+            dy = y + move[direction][1]
+
             if(dx < 0 or dy < 0 or dx >= n or dy >= n):
                 continue
             if(graph[dx][dy] == '*'):
                 continue
-            
-            if(i[2] == direction):
-                new = mirror
-            else:
-                new = mirror+1
-            
-            dfs(graph,dx,dy,new,i[2])
-            #graph[dx][dy] = block
-    else: # . 일때
-        for i in move:
-            if(i[2] != direction):
-                continue
-            
-            dx = x + i[0]
-            dy = y + i[1]
-            
-            if(dx < 0 or dy < 0 or dx >= n or dy >= n):
-                continue
-            if(graph[dx][dy] == '*'):
-                continue
-            
-            dfs(graph, dx, dy, mirror, direction)
-            #graph[dx][dy] = block
-
-            
-
+            q.append([dx,dy,new,direction])
+        #print('x, y: ', x, y, visited )
+    
 n = int(input())
 graph = []
 points = []
-visited = [[[INF, INF, INF, INF]]*n for _ in range(n)] 
+
+visited = [ [[INF, INF, INF, INF] for _ in range(n)] for _ in range(n)] 
 #print(visited)
 for i in range(n):
     line = list(input().rstrip())
@@ -69,14 +66,13 @@ for i in range(n):
 move = [[1,0,0], [-1, 0, 1], [0, 1, 2], [0, -1, 3]]
 directionNum = {'down': 0, 'up':1, 'right':2, 'left':3}
 
-
-
 sx, sy = points[0]
 ex, ey = points[1]
 
 cost = int(1e9)
 
 illegalMove = {0:1, 1:0, 2:3, 3:2}
+
 
 for i in move:
     x = sx + i[0]
@@ -86,19 +82,6 @@ for i in move:
     if(graph[x][y] == '*'):
         continue
     #print(x,y,i[2])
-    dfs(graph,x,y,0,i[2])
-
+    bfs(graph,x,y,i[2])
     
-for k in range(4):
-    for i in visited:
-        for j in i:
-            if(j[k] == INF):
-                print('*', end='')
-            else:
-                print(j[k], end='')
-        print()
-    print()
-
-
-
-print(visited[ex][ey])
+print(min(visited[ex][ey]))
