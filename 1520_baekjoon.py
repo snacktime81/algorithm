@@ -25,7 +25,7 @@ def dfs(x, y):
     if visited[x][y] != -1:
         return visited[x][y]
     
-    cnt = 0
+    visited[x][y] = 0
     
     for i in move:
         dx = x + i[0]
@@ -36,9 +36,9 @@ def dfs(x, y):
         if(graph[x][y] <= graph[dx][dy]):
             continue
             
-        cnt += dfs(dx, dy)
+        visited[x][y] += dfs(dx, dy)
         #print(visited)
-    visited[x][y] = cnt 
+    
     return visited[x][y]
 
 cnt = dfs(x, y)   
