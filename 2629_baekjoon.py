@@ -24,7 +24,7 @@ for i in balls:
         c = False
         for j in range(DEPTH):
             now = i + j
-            if(dp[-1][j]==1 and dp[-1][now] == 1):
+            if(dp[-1][j]==1 and dp[-1][now] == 1): # 추가 a,b,c 라면 x+a = b+c 이면 측정가능한 무게이다. 
                 c = True
                 break
         if(c):
